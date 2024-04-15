@@ -249,8 +249,8 @@ Realizar um novo pedido.
 
 | campo | tipo | obrigatório | descrição
 |:---:|:---:|:---:|:---:|
-| `valor_total`|BigDecimal |✅| Valor Total do pedido.
-| `frete_entrega`|BigDecimal |✅| Frete de entrega do pedido.
+| `valor_total`|Double |✅| Valor Total do pedido.
+| `frete_entrega`|Double |✅| Frete de entrega do pedido.
 | `data_pedido`|LocalDate |✅| Data que o pedido foi realizado.
 | `data_entrega`|LocalDate |✅| Data de entrega prevista para o pedido.
 
@@ -322,8 +322,8 @@ Atualizar os dados de pedido com o `id_pedido` informado no path, utilizando os 
 
 | campo | tipo | obrigatório | descrição
 |:---:|:---:|:---:|:---:|
-| `valor_total`|BigDecimal |✅| Valor Total do pedido.
-| `frete_entrega`|BigDecimal |✅| Frete de entrega do pedido.
+| `valor_total`|Double |✅| Valor Total do pedido.
+| `frete_entrega`|Double |✅| Frete de entrega do pedido.
 | `data_pedido`|LocalDate |✅| Data que o pedido foi realizado.
 | `data_entrega`|LocalDate |✅| Data de entrega prevista para o pedido.
 ```js
