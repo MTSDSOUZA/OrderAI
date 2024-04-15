@@ -28,7 +28,7 @@ Thomas Nícolas de Melo Mendonça - RM99832 (Mobile Application Development)
 
 ## Cronograma de Desenvolvimento
 
-[Cronograma de Atividades](./Documentos/cronograma-atividades.png)
+[Cronograma de Atividades](./Documentos/cronograma-atividades.pdf)
 
 ## Imagem dos diagramas;
 
