@@ -26,9 +26,24 @@ Thomas Nícolas de Melo Mendonça - RM99832 (Mobile Application Development)
 6. trocar o JDBC URL por jdbc:h2:mem:orderai e conectar
 7. Testar as requisições pelo Postman ou Insomnia
 
+## Cronograma de Desenvolvimento
+
+[Cronograma de Atividades](./Documentos/cronograma-atividades.png)
+
 ## Imagem dos diagramas;
 
+### Diagrama UML
+![UML](./imagens/OrderAI.png)
+### Modelagem Banco de dados
+![Modelagem](./imagens/modelagemBanco.png)
+
 ## Link para vídeo apresentando a Proposta Tecnológica, o público-alvo da aplicação e os problemas que a aplicação se propõe a solucionar;
+
+[Vídeo Solução OrderAI](https://youtu.be/sG_JNFG8ArU)
+
+### Testar requisições no Postman
+
+[JSON da Collection do Postman](./Documentos/OrderAI.postman_collection.json)
 
 ## Listagem de todos os endpoints (Documentação da API);
 
@@ -510,6 +525,5 @@ Realizar o pagamento.
 |---     | ---
 | `201`  | pagamento realizado com sucesso
 | `400`  | Validação falhou. Verifique as regras para o corpo da requisição
-
 
 
