@@ -4,35 +4,46 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ItemPedido {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_itempedido;
 
-    @NotBlank(message = "Nome do Item é obrigatório")
-    @Size(min = 3, max = 255, message = "Nome do item deve ter pelo menos 3 caracteres")
+    @NotBlank(message = "itempedido.nome.notblank")
+    @Size(min = 3, max = 255, message = "itempedido.nome.size")
     private String nome;
 
-    @NotBlank(message = "Descrição é obrigatória")
-    @Size(min = 3, max = 255, message = "Descrição deve ter pelo menos 3 caracteres")
+    @NotBlank(message = "itempedido.descricao.notblank")
+    @Size(min = 3, max = 255, message = "itempedido.descricao.size")
     private String descricao;
 
-    @NotNull(message = "Quantidade é obrigatória")
-    @Positive(message = "A quantidade deve ser positiva")
+    @NotNull(message = "itempedido.quantidade.notNull")
+    @Positive(message = "itempedido.quantidade.positive")
     private int quantidade;
     
-    @NotNull(message = "Preço é obrigatório")
-    @Positive(message = "O valor deve ser positivo")
+    @NotNull(message = "itempedido.preco.notNull")
+    @Positive(message = "itempedido.preco.positive")
     private double preco;
 
-    @NotBlank(message = "Recomendação é obrigatória")
-    @Size(min = 3, max = 255, message = "Recomendação deve ter pelo menos 3 caracteres")
+    @NotBlank(message = "itempedido.recomendacao.notblank")
+    @Size(min = 3, max = 255, message = "itempedido.recomendacao.size")
     private String recomendacao;
+
+    @ManyToOne
+    private Pedido pedido;
 }
+

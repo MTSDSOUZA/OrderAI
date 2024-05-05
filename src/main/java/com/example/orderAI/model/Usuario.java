@@ -4,6 +4,9 @@ import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.example.orderAI.validation.TipoSexo;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,10 +16,16 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario{
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_usuario;
@@ -27,42 +36,44 @@ public class Usuario{
     @Email
     private String email;
 
-    @NotBlank(message = "Senha é obrigatória")
-    @Size(min = 8, max = 255, message = "Senha deve ter pelo menos 8 caracteres")
+    @NotBlank(message = "{usuario.senha.notblank}")
+    @Size(min = 8, max = 255, message = "{usuario.senha.size}")
     private String senha;
 
-    @NotBlank(message = "Telefone é obrigatório")
-    private String telefone; //não esquecer de criar regex para telefone
+    @NotBlank(message = "{usuario.telefone.notblank}")
+    private String telefone;
 
-    @NotBlank(message = "Endereço é obrigatório")
-    @Size(min = 8, max = 255, message = "Endereço deve ter pelo menos 8 caracteres")
+    @NotBlank(message = "{usuario.endereco.notblank}")
+    @Size(min = 8, max = 255, message = "{usuario.endereco.size}")
     private String endereco; 
 
-    @NotBlank(message = "CEP é obrigatório")
-    @Size(min = 8, max = 255, message = "CEP deve ter pelo menos 8 caracteres")
+    @NotBlank(message = "{usuario.cep.notblank}")
+    @Size(min = 8, max = 255, message = "{usuario.cep.size}")
     private String cep;
 
-    @NotBlank(message = "Cidade é obrigatório")
-    @Size(min = 8, max = 255, message = "Cidade deve ter pelo menos 8 caracteres")
+    @NotBlank(message = "{usuario.cidade.notblank}")
+    @Size(min = 8, max = 255, message = "{usuario.cidade.size}")
     private String cidade;
 
-    @NotBlank(message = "Estado é obrigatório")
-    @Size(min = 8, max = 255, message = "Estado deve ter pelo menos 8 caracteres")
+    @NotBlank(message = "{usuario.estado.notblank}")
+    @Size(min = 8, max = 255, message = "{usuario.estado.size}")
     private String estado;
 
     @CPF
-    @NotBlank(message = "CPF é obrigatório")
+    @NotBlank(message = "{usuario.cpf.notblank}")
     private String cpf;
 
     @Past
-    @NotNull(message = "Data de cadastro é obrigatória")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message = "{usuario.datacadastro.notnull}")
     private LocalDate data_cadastro;
     
     @Past
-    @NotNull(message = "Data de nascimento é obrigatória")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @NotNull(message = "{usuario.datanascimento.notnull}")
     private LocalDate data_nascimento;
-
-    @NotBlank(message = "Sexo é obrigatório")
-    private String sexo; //criar validação de feminino e masculino
+    
+    @TipoSexo
+    private String sexo;
 
 }

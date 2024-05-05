@@ -14,7 +14,11 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,18 +31,30 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
 @RequestMapping("/usuario")
+@CacheConfig(cacheNames = "usuarios")
 @Slf4j
 public class UsuarioController {
     @Autowired
     UsuarioRepository repositoryUsuario;
 
     @GetMapping
+    @Cacheable
     public List<Usuario> index() {
         return repositoryUsuario.findAll();
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<Usuario> listarUsuario(@PathVariable Long id){
+
+        return repositoryUsuario
+                .findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
+    @CacheEvict(allEntries = true)
     public Usuario create(@RequestBody @Valid Usuario usuario) {
         log.info("Cadastrando usuário: {}", usuario);
         repositoryUsuario.save(usuario);
@@ -47,6 +63,7 @@ public class UsuarioController {
 
     @DeleteMapping("{id_usuario}")
     @ResponseStatus(NO_CONTENT)
+    @CacheEvict(allEntries = true)
     public void destroy(@PathVariable Long id_usuario) {
         log.info("Apagando usuário");
 
@@ -55,6 +72,7 @@ public class UsuarioController {
     }
 
     @PutMapping("{id_usuario}")
+    @CacheEvict(allEntries = true)
     public Usuario update(@PathVariable Long id_usuario, @RequestBody Usuario usuario){
         log.info("atualizando usuário com id {} para {}", id_usuario, usuario);
 

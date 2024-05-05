@@ -3,7 +3,11 @@ package com.example.orderAI.controller;
 import java.util.List;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,18 +27,30 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/pagamento")
+@CacheConfig(cacheNames = "pagamentos")
 @Slf4j
 public class PagamentoController {
     @Autowired
     PagamentoRepository repositoryPagamento;
 
     @GetMapping
+    @Cacheable
     public List<Pagamento> index() {
         return repositoryPagamento.findAll();
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<Pagamento> listarPagamento(@PathVariable Long id){
+
+        return repositoryPagamento
+                .findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
+    @CacheEvict(allEntries = true)
     public Pagamento create(@RequestBody @Valid Pagamento pagamento) {
         log.info("Cadastrando pagamento: {}", pagamento);
         repositoryPagamento.save(pagamento);
@@ -43,6 +59,7 @@ public class PagamentoController {
 
     @DeleteMapping("{id_pagamento}")
     @ResponseStatus(NO_CONTENT)
+    @CacheEvict(allEntries = true)
     public void destroy(@PathVariable Long id_pagamento) {
         log.info("Apagando pagamento");
 
@@ -51,6 +68,7 @@ public class PagamentoController {
     }
 
     @PutMapping("{id_pagamento}")
+    @CacheEvict(allEntries = true)
     public Pagamento update(@PathVariable Long id_pagamento, @RequestBody Pagamento pagamento){
         log.info("atualizando pagamento com id {} para {}", id_pagamento, pagamento);
 

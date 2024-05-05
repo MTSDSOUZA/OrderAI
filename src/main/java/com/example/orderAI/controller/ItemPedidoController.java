@@ -3,7 +3,12 @@ package com.example.orderAI.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,18 +29,30 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/item")
+@CacheConfig(cacheNames = "items")
 @Slf4j
 public class ItemPedidoController {
     @Autowired
     ItemPedidoRepository repositoryItemPedido;
 
     @GetMapping
+    @Cacheable
     public List<ItemPedido> index() {
         return repositoryItemPedido.findAll();
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<ItemPedido> listarItem(@PathVariable Long id){
+
+        return repositoryItemPedido
+                .findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
+    @CacheEvict(allEntries = true)
     public ItemPedido create(@RequestBody @Valid ItemPedido item) {
         log.info("Cadastrando Item: {}", item);
         repositoryItemPedido.save(item);
@@ -44,6 +61,7 @@ public class ItemPedidoController {
 
     @DeleteMapping("{id_itempedido}")
     @ResponseStatus(NO_CONTENT)
+    @CacheEvict(allEntries = true)
     public void destroy(@PathVariable Long id_itempedido) {
         log.info("Apagando Item");
 
@@ -52,6 +70,7 @@ public class ItemPedidoController {
     }
 
     @PutMapping("{id_itempedido}")
+    @CacheEvict(allEntries = true)
     public ItemPedido update(@PathVariable Long id_itempedido, @RequestBody ItemPedido item){
         log.info("atualizando Item com id {} para {}", id_itempedido, item);
 

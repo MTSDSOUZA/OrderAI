@@ -4,32 +4,42 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Pagamento {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_pagamento;
 
-    @NotNull(message = "Número do Cartão é obrigatório")
-    @Size(max = 16, message = "Descrição deve ter no máximo 16 caracteres")
+    @NotNull(message = "pagamento.num_cartao.notNull")
+    @Size(max = 16, message = "pagamento.num_cartao.size")
     private String num_cartao;
 
-    @NotNull(message = "Nome do Cartão é obrigatório")
-    @Size(min = 3,max = 255, message = "Nome do Cartão deve ter pelo menos 3 caracteres")
+    @NotNull(message = "pagamento.nome_cartao.notNull")
+    @Size(min = 3, max = 255, message = "pagamento.nome_cartao.size")
     private String nome_cartao;
 
-    @NotNull(message = "Data de Validade é obrigatório")
+    @NotNull(message = "pagamento.data_validade.notNull")
     private String data_validade;
 
-    @Positive(message = "O CVV deve ser positivo")
-    @NotNull(message = "O CVV é obrigatório")
+    @Positive(message = "pagamento.cvv.positive")
+    @NotNull(message = "pagamento.cvv.notNull")
     private int cvv;
 
     private String apelido_cartao;
+
+    @ManyToOne
+    private Usuario usuario;
 }
+
