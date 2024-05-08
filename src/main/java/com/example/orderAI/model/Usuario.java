@@ -72,6 +72,9 @@ public class Usuario{
     @JsonFormat(pattern = "dd/MM/yyyy")
     @NotNull(message = "{usuario.datanascimento.notnull}")
     private LocalDate data_nascimento;
+
+    @TipoPagamento
+    private String tipo_pagamento;
     
     @TipoSexo
     private String sexo;

@@ -47,8 +47,6 @@ public class DatabaseSeeder implements CommandLineRunner{
                 .id_itempedido(1L)
                 .nome("Item X")
                 .descricao("Este item é pequeno")
-                .quantidade(2)
-                .preco(22.50)
                 .recomendacao("Você recentemente comprou 1 produto deste, recomendo que veja a nova linha da marca")
                 .pedido(pedidoRepository.findById(1L).get())
                 .build()
