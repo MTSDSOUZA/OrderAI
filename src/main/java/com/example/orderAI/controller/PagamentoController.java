@@ -37,11 +37,17 @@ public class PagamentoController {
 
     @GetMapping
     @Cacheable
+    @Operation(
+        summary = "Listar Pagamento"
+    )
     public List<Pagamento> index() {
         return repositoryPagamento.findAll();
     }
 
     @GetMapping("{id}")
+    @Operation(
+        summary = "Listar Pagamento por id"
+    )
     public ResponseEntity<Pagamento> listarPagamento(@PathVariable Long id){
 
         return repositoryPagamento
@@ -53,6 +59,13 @@ public class PagamentoController {
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     @CacheEvict(allEntries = true)
+    @Operation(
+        summary = "Cadastrar Pagamento"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "201"),
+        @ApiResponse(responseCode = "400")
+    })
     public Pagamento create(@RequestBody @Valid Pagamento pagamento) {
         log.info("Cadastrando pagamento: {}", pagamento);
         repositoryPagamento.save(pagamento);
@@ -62,6 +75,14 @@ public class PagamentoController {
     @DeleteMapping("{id_pagamento}")
     @ResponseStatus(NO_CONTENT)
     @CacheEvict(allEntries = true)
+    @Operation(
+        summary = "Deletar Pagamento"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "204"),
+        @ApiResponse(responseCode = "404"),
+        @ApiResponse(responseCode = "401")
+    })
     public void destroy(@PathVariable Long id_pagamento) {
         log.info("Apagando pagamento");
 
@@ -71,6 +92,15 @@ public class PagamentoController {
 
     @PutMapping("{id_pagamento}")
     @CacheEvict(allEntries = true)
+    @Operation(
+        summary = "Atualizar Pagamento"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "200"),
+        @ApiResponse(responseCode = "400"),
+        @ApiResponse(responseCode = "401"),
+        @ApiResponse(responseCode = "404")
+    })
     public Pagamento update(@PathVariable Long id_pagamento, @RequestBody Pagamento pagamento){
         log.info("atualizando pagamento com id {} para {}", id_pagamento, pagamento);
 

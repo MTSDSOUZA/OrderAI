@@ -39,11 +39,17 @@ public class ItemPedidoController {
 
     @GetMapping
     @Cacheable
+    @Operation(
+        summary = "Listar Items"
+    )
     public List<ItemPedido> index() {
         return repositoryItemPedido.findAll();
     }
 
     @GetMapping("{id}")
+    @Operation(
+        summary = "Listar Item por id"
+    )
     public ResponseEntity<ItemPedido> listarItem(@PathVariable Long id){
 
         return repositoryItemPedido
@@ -55,6 +61,15 @@ public class ItemPedidoController {
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     @CacheEvict(allEntries = true)
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    @Operation(
+        summary = "Cadastrar Item"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "201"),
+        @ApiResponse(responseCode = "400")
+    })
     public ItemPedido create(@RequestBody @Valid ItemPedido item) {
         log.info("Cadastrando Item: {}", item);
         repositoryItemPedido.save(item);
@@ -64,6 +79,14 @@ public class ItemPedidoController {
     @DeleteMapping("{id_itempedido}")
     @ResponseStatus(NO_CONTENT)
     @CacheEvict(allEntries = true)
+    @Operation(
+        summary = "Deletar Item"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "204"),
+        @ApiResponse(responseCode = "404"),
+        @ApiResponse(responseCode = "401")
+    })
     public void destroy(@PathVariable Long id_itempedido) {
         log.info("Apagando Item");
 
@@ -73,6 +96,15 @@ public class ItemPedidoController {
 
     @PutMapping("{id_itempedido}")
     @CacheEvict(allEntries = true)
+    @Operation(
+        summary = "Atualizar Item"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "200"),
+        @ApiResponse(responseCode = "400"),
+        @ApiResponse(responseCode = "401"),
+        @ApiResponse(responseCode = "404")
+    })
     public ItemPedido update(@PathVariable Long id_itempedido, @RequestBody ItemPedido item){
         log.info("atualizando Item com id {} para {}", id_itempedido, item);
 

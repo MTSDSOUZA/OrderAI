@@ -38,11 +38,17 @@ public class PedidoController {
 
     @GetMapping
     @Cacheable
+    @Operation(
+        summary = "Listar Pedido"
+    )
     public List<Pedido> index() {
         return repositoryPedido.findAll();
     }
 
     @GetMapping("{id}")
+    @Operation(
+        summary = "Listar Pedido por id"
+    )
     public ResponseEntity<Pedido> listarPedido(@PathVariable Long id){
 
         return repositoryPedido
@@ -54,6 +60,13 @@ public class PedidoController {
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     @CacheEvict(allEntries = true)
+    @Operation(
+        summary = "Cadastrar Pedido"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "201"),
+        @ApiResponse(responseCode = "400")
+    })
     public Pedido create(@RequestBody @Valid Pedido pedido) {
         log.info("Cadastrando pedido: {}", pedido);
         repositoryPedido.save(pedido);
@@ -63,6 +76,14 @@ public class PedidoController {
     @DeleteMapping("{id_pedido}")
     @ResponseStatus(NO_CONTENT)
     @CacheEvict(allEntries = true)
+    @Operation(
+        summary = "Deletar Pedido"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "204"),
+        @ApiResponse(responseCode = "404"),
+        @ApiResponse(responseCode = "401")
+    })
     public void destroy(@PathVariable Long id_pedido) {
         log.info("Apagando pedido");
 
@@ -72,6 +93,15 @@ public class PedidoController {
 
     @PutMapping("{id_pedido}")
     @CacheEvict(allEntries = true)
+    @Operation(
+        summary = "Atualizar Pedido"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "200"),
+        @ApiResponse(responseCode = "400"),
+        @ApiResponse(responseCode = "401"),
+        @ApiResponse(responseCode = "404")
+    })
     public Pedido update(@PathVariable Long id_pedido, @RequestBody Pedido pedido){
         log.info("atualizando pedido com id {} para {}", id_pedido, pedido);
 

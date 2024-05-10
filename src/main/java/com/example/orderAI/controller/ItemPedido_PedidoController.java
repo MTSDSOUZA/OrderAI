@@ -39,16 +39,14 @@ public class ItemPedido_PedidoController {
 
     @GetMapping
     @Operation(
-        summary = "Listar Associação de Pedido e ItemPedido",
-        description = "Retorna um array com todas informações compartilhadas entre pedido e itemPedido."
+        summary = "Listar Associação de Pedido e ItemPedido"
     )
     public List<ItemPedido_Pedido> index() {
         return repositoryItemPedido_Pedido.findAll();
     }
 
     @Operation(
-        summary = "Listar associação de Pedido e ItemPedido por id",
-        description = "Retorna as informações daquele id"
+        summary = "Listar associação de Pedido e ItemPedido por id"
     )
     @GetMapping("{id}")
     public ResponseEntity<ItemPedido_Pedido> listarItem(@PathVariable Long id){
@@ -66,7 +64,7 @@ public class ItemPedido_PedidoController {
     )
     @ApiResponses({ 
         @ApiResponse(responseCode = "201"),
-        @ApiResponse(responseCode = "400")
+        @ApiResponse(responseCode = "400"),
     })
     public ItemPedido_Pedido create(@RequestBody @Valid ItemPedido_Pedido itempedido_pedido) {
         log.info("Cadastrando ItemPedido_Pedido: {}", itempedido_pedido);
@@ -76,6 +74,14 @@ public class ItemPedido_PedidoController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(NO_CONTENT)
+    @Operation(
+        summary = "Deletar associação de pedido e itemPedido"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "204"),
+        @ApiResponse(responseCode = "404"),
+        @ApiResponse(responseCode = "401")
+    })
     public void destroy(@PathVariable Long id) {
         log.info("Apagando ItemPedido_Pedido");
 
@@ -84,6 +90,15 @@ public class ItemPedido_PedidoController {
     }
 
     @PutMapping("{id}")
+    @Operation(
+        summary = "Atualizar associação de pedido e itemPedido"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "200"),
+        @ApiResponse(responseCode = "400"),
+        @ApiResponse(responseCode = "401"),
+        @ApiResponse(responseCode = "404")
+    })
     public ItemPedido_Pedido update(@PathVariable Long id_itemPedido_Pedido, @RequestBody ItemPedido_Pedido item){
         log.info("atualizando ItemPedido_Pedido com id {} para {}", id_itemPedido_Pedido, item);
 

@@ -41,11 +41,17 @@ public class UsuarioController {
 
     @GetMapping
     @Cacheable
+    @Operation(
+        summary = "Listar Usuario"
+    )
     public List<Usuario> index() {
         return repositoryUsuario.findAll();
     }
 
     @GetMapping("{id}")
+    @Operation(
+        summary = "Listar Usuario por id"
+    )
     public ResponseEntity<Usuario> listarUsuario(@PathVariable Long id){
 
         return repositoryUsuario
@@ -57,6 +63,13 @@ public class UsuarioController {
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     @CacheEvict(allEntries = true)
+    @Operation(
+        summary = "Cadastrar Usuario"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "201"),
+        @ApiResponse(responseCode = "400")
+    })
     public Usuario create(@RequestBody @Valid Usuario usuario) {
         log.info("Cadastrando usuário: {}", usuario);
         repositoryUsuario.save(usuario);
@@ -66,6 +79,14 @@ public class UsuarioController {
     @DeleteMapping("{id_usuario}")
     @ResponseStatus(NO_CONTENT)
     @CacheEvict(allEntries = true)
+    @Operation(
+        summary = "Deletar Usuario"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "204"),
+        @ApiResponse(responseCode = "404"),
+        @ApiResponse(responseCode = "401")
+    })
     public void destroy(@PathVariable Long id_usuario) {
         log.info("Apagando usuário");
 
@@ -75,6 +96,15 @@ public class UsuarioController {
 
     @PutMapping("{id_usuario}")
     @CacheEvict(allEntries = true)
+    @Operation(
+        summary = "Atualizar Usuario"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "200"),
+        @ApiResponse(responseCode = "400"),
+        @ApiResponse(responseCode = "401"),
+        @ApiResponse(responseCode = "404")
+    })
     public Usuario update(@PathVariable Long id_usuario, @RequestBody Usuario usuario){
         log.info("atualizando usuário com id {} para {}", id_usuario, usuario);
 
