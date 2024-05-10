@@ -21,21 +21,35 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.orderAI.model.ItemPedido_Pedido;
 import com.example.orderAI.repository.ItemPedido_PedidoRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/itempedidopedido")
 @Slf4j
+@Tag(name = "ItemPedido_Pedido", description = "Faz a associação entre o itemPedido e Pedido")
 public class ItemPedido_PedidoController {
     @Autowired
     ItemPedido_PedidoRepository repositoryItemPedido_Pedido;
 
+
     @GetMapping
+    @Operation(
+        summary = "Listar Associação de Pedido e ItemPedido",
+        description = "Retorna um array com todas informações compartilhadas entre pedido e itemPedido."
+    )
     public List<ItemPedido_Pedido> index() {
         return repositoryItemPedido_Pedido.findAll();
     }
 
+    @Operation(
+        summary = "Listar associação de Pedido e ItemPedido por id",
+        description = "Retorna as informações daquele id"
+    )
     @GetMapping("{id}")
     public ResponseEntity<ItemPedido_Pedido> listarItem(@PathVariable Long id){
 
@@ -43,10 +57,17 @@ public class ItemPedido_PedidoController {
                 .findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
-
+            }
+    
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
+    @Operation(
+        summary = "Cadastrar associação de pedido e itemPedido"
+    )
+    @ApiResponses({ 
+        @ApiResponse(responseCode = "201"),
+        @ApiResponse(responseCode = "400")
+    })
     public ItemPedido_Pedido create(@RequestBody @Valid ItemPedido_Pedido itempedido_pedido) {
         log.info("Cadastrando ItemPedido_Pedido: {}", itempedido_pedido);
         repositoryItemPedido_Pedido.save(itempedido_pedido);

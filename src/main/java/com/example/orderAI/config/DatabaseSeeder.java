@@ -37,36 +37,6 @@ public class DatabaseSeeder implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-        // pedidoRepository.saveAll(List.of(
-        //     Pedido.builder()
-        //         .id_pedido(1L)
-        //         .valor_total(60.00)
-        //         .frete_entrega(15.00)
-        //         .data_pedido(LocalDate.now())
-        //         .data_entrega(LocalDate.now().plusWeeks(1))
-        //         .usuario(usuarioRepository.findById(1L).get())
-        //         .build()
-        // ));
-
-        // itemPedido_PedidoRepository.saveAll(List.of(
-        //     ItemPedido_Pedido.builder()
-        //         .id_itemPedido_Pedido(1L)
-        //         .pedido(pedidoRepository.findById(1L).get())
-        //         .quantidade(2)
-        //         .preco(50.00)
-        //         .build()
-        // ));
-
-        // itemPedidoRepository.saveAll(List.of(
-        //     ItemPedido.builder()
-        //         .id_itempedido(1L)
-        //         .nome("Item X")
-        //         .descricao("Este item é pequeno")
-        //         .recomendacao("Você recentemente comprou 1 produto deste, recomendo que veja a nova linha da marca")
-        //         .itempedidopedido(itemPedido_PedidoRepository.findById(1L).get())
-        //         .build()
-        // ));
-
         usuarioRepository.saveAll(List.of(
             Usuario.builder()
                 .id_usuario(1L)
@@ -95,6 +65,36 @@ public class DatabaseSeeder implements CommandLineRunner{
                 .cvv(123)
                 .apelido_cartao("Cartão de débito")
                 .usuario(usuarioRepository.findById(1L).get())
+                .build()
+        ));
+
+        pedidoRepository.saveAll(List.of(
+            Pedido.builder()
+                .id_pedido(1L)
+                .valor_total(60.00)
+                .frete_entrega(15.00)
+                .data_pedido(LocalDate.now())
+                .data_entrega(LocalDate.now().plusWeeks(1))
+                .usuario(usuarioRepository.findById(1L).get())
+                .build()
+        ));
+
+        itemPedido_PedidoRepository.saveAll(List.of(
+            ItemPedido_Pedido.builder()
+                .id_itemPedido_Pedido(1L)
+                .pedido(pedidoRepository.findById(1L).get())
+                .quantidade(2)
+                .preco(50.00)
+                .build()
+        ));
+
+        itemPedidoRepository.saveAll(List.of(
+            ItemPedido.builder()
+                .id_itempedido(1L)
+                .nome("Item X")
+                .descricao("Este item é pequeno")
+                .recomendacao("Você recentemente comprou 1 produto deste, recomendo que veja a nova linha da marca")
+                .itempedidopedido(itemPedido_PedidoRepository.findById(1L).get())
                 .build()
         ));
     }

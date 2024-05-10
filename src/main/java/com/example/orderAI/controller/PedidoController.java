@@ -23,6 +23,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 import com.example.orderAI.model.Pedido;
 import com.example.orderAI.repository.PedidoRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/pedido")
 @CacheConfig(cacheNames = "pedidos")
 @Slf4j
+@Tag(name = "pedido", description = "Pedido que o usuário vai fazer")
 public class PedidoController {
     @Autowired
     PedidoRepository repositoryPedido;

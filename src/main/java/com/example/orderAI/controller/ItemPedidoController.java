@@ -24,6 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.orderAI.model.ItemPedido;
 import com.example.orderAI.repository.ItemPedidoRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/item")
 @CacheConfig(cacheNames = "items")
 @Slf4j
+@Tag(name = "itemPedido", description = "Item que pode ser inserido no pedido")
 public class ItemPedidoController {
     @Autowired
     ItemPedidoRepository repositoryItemPedido;
