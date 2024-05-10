@@ -29,14 +29,6 @@ public class ItemPedido {
     @Size(min = 3, max = 255, message = "itempedido.descricao.size")
     private String descricao;
 
-    // @NotNull(message = "itempedido.quantidade.notNull")
-    // @Positive(message = "itempedido.quantidade.positive")
-    // private int quantidade;
-    
-    // @NotNull(message = "itempedido.preco.notNull")
-    // @Positive(message = "itempedido.preco.positive")
-    // private double preco;
-
     @NotBlank(message = "itempedido.recomendacao.notblank")
     @Size(min = 3, max = 255, message = "itempedido.recomendacao.size")
     private String recomendacao;

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.example.orderAI.validation.TipoPagamento;
 import com.example.orderAI.validation.TipoSexo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 

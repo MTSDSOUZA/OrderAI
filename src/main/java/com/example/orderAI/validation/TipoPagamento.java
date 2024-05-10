@@ -11,8 +11,8 @@ import jakarta.validation.Payload;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = TipoPagamentoValidator.class)
-public class TipoPagamento {
-    String message() default "{}";
+public @interface TipoPagamento {
+    String message() default "{usuario.tipopagamento.message}";
 
     Class<?>[] groups() default { };
 

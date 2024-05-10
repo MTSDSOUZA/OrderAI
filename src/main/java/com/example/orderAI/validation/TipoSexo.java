@@ -12,7 +12,7 @@ import jakarta.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = TipoSexoValidator.class)
 public @interface TipoSexo {
-    String message() default "{sexo.tipo.message}";
+    String message() default "{usuario.tiposexo.message}";
 
 	Class<?>[] groups() default { };
 
