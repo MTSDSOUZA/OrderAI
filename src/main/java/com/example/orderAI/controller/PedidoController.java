@@ -23,6 +23,9 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 import com.example.orderAI.model.Pedido;
 import com.example.orderAI.repository.PedidoRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

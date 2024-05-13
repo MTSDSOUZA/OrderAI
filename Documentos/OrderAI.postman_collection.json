@@ -7,230 +7,492 @@
 	},
 	"item": [
 		{
-			"name": "Cadastrar Usuario",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"nome\": \"Kauê\",\n    \"email\": \"kauefernandesbraz@gmail.com\",\n    \"senha\": \"12345678\",\n    \"telefone\": \"1193241-9398\",\n    \"endereco\": \"Rua Isaar Carlos de Camargo\",\n    \"cep\": \"08280040\",\n    \"cidade\": \"São Paulo\",\n    \"estado\": \"São Paulo\",\n    \"cpf\": \"54610446898\",\n    \"data_cadastro\": \"2005-03-23\",\n    \"data_nascimento\": \"2005-03-23\",\n    \"sexo\": \"Masculino\"\n}\n\n",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Usuário",
+			"item": [
+				{
+					"name": "Cadastrar Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"nome\": \"Braz\",\n        \"email\": \"rm97768@fiap.com.br\",\n        \"senha\": \"12345678\",\n        \"telefone\": \"123456789\",\n        \"endereco\": \"Rua FIAP\",\n        \"cep\": \"023231231\",\n        \"cidade\": \"São Paulo\",\n        \"estado\": \"São Paulo\",\n        \"cpf\": \"54610446898\",\n        \"data_cadastro\": \"05/05/2024\",\n        \"data_nascimento\": \"27/03/2005\",\n        \"tipo_pagamento\": \"Débito\",\n        \"sexo\": \"Masculino\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuario",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost:8080/usuario",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"usuario"
-					]
+				{
+					"name": "Listar Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/usuario",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"nome\": \"Kauê Fernandes Braz\",\n        \"email\": \"rm97768@fiap.com.br\",\n        \"senha\": \"12345678\",\n        \"telefone\": \"123456789\",\n        \"endereco\": \"Rua FIAP\",\n        \"cep\": \"023231231\",\n        \"cidade\": \"São Paulo\",\n        \"estado\": \"São Paulo\",\n        \"cpf\": \"54610446898\",\n        \"data_cadastro\": \"05/05/2024\",\n        \"data_nascimento\": \"23/03/2005\",\n        \"tipo_pagamento\": \"Débito\",\n        \"sexo\": \"Masculino\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuario/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/usuario/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuario",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Listar Usuario",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/usuario",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"usuario"
-					]
+			"name": "Pedido",
+			"item": [
+				{
+					"name": "Realizar Pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"valor_total\": 60.0,\n        \"frete_entrega\": 20.0,\n        \"data_pedido\": \"12/05/2024\",\n        \"data_entrega\": \"19/05/2024\",\n        \"usuario\": {\n            \"id_usuario\": 1,\n            \"nome\": \"Kauê Fernandes Braz\",\n            \"email\": \"rm97768@fiap.com.br\",\n            \"senha\": \"12345678\",\n            \"telefone\": \"123456789\",\n            \"endereco\": \"Rua FIAP\",\n            \"cep\": \"023231231\",\n            \"cidade\": \"São Paulo\",\n            \"estado\": \"São Paulo\",\n            \"cpf\": \"54610446898\",\n            \"data_cadastro\": \"05/05/2024\",\n            \"data_nascimento\": \"27/03/2005\",\n            \"tipo_pagamento\": \"Débito\",\n            \"sexo\": \"Masculino\"\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/pedido",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Pedido",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/pedido",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Pedido",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"valor_total\": 50.0,\n        \"frete_entrega\": 15.0,\n        \"data_pedido\": \"12/05/2024\",\n        \"data_entrega\": \"19/05/2024\",\n        \"usuario\": {\n            \"id_usuario\": 1,\n            \"nome\": \"Kauê Fernandes Braz\",\n            \"email\": \"rm97768@fiap.com.br\",\n            \"senha\": \"12345678\",\n            \"telefone\": \"123456789\",\n            \"endereco\": \"Rua FIAP\",\n            \"cep\": \"023231231\",\n            \"cidade\": \"São Paulo\",\n            \"estado\": \"São Paulo\",\n            \"cpf\": \"54610446898\",\n            \"data_cadastro\": \"05/05/2024\",\n            \"data_nascimento\": \"27/03/2005\",\n            \"tipo_pagamento\": \"Débito\",\n            \"sexo\": \"Masculino\"\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/pedido/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Pedido",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/pedido/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedido",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Atualizar Usuario",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/usuario",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"usuario"
-					]
+			"name": "Item",
+			"item": [
+				{
+					"name": "Adicionar Item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"nome\": \"Item X\",\n        \"descricao\": \"Este item é pequeno\",\n        \"recomendacao\": \"Você recentemente comprou 1 produto deste, recomendo que veja a nova linha da marca\",\n        \"itempedidopedido\": {\n            \"id_itemPedido_Pedido\": 1,\n            \"pedido\": {\n                \"id_pedido\": 1,\n                \"valor_total\": 60.0,\n                \"frete_entrega\": 15.0,\n                \"data_pedido\": \"12/05/2024\",\n                \"data_entrega\": \"19/05/2024\",\n                \"usuario\": {\n                    \"id_usuario\": 1,\n                    \"nome\": \"Kauê Fernandes Braz\",\n                    \"email\": \"rm97768@fiap.com.br\",\n                    \"senha\": \"12345678\",\n                    \"telefone\": \"123456789\",\n                    \"endereco\": \"Rua FIAP\",\n                    \"cep\": \"023231231\",\n                    \"cidade\": \"São Paulo\",\n                    \"estado\": \"São Paulo\",\n                    \"cpf\": \"54610446898\",\n                    \"data_cadastro\": \"05/05/2024\",\n                    \"data_nascimento\": \"27/03/2005\",\n                    \"tipo_pagamento\": \"Débito\",\n                    \"sexo\": \"Masculino\"\n                }\n            },\n            \"quantidade\": 3,\n            \"preco\": 50.0\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/item",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/item",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remover Item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/item/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"item",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Item",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"id_itempedido\": 1,\n        \"nome\": \"Item Y\",\n        \"descricao\": \"Este item é pequeno\",\n        \"recomendacao\": \"Você recentemente comprou 1 produto deste, recomendo que veja a nova linha da marca\",\n        \"itempedidopedido\": {\n            \"id_itemPedido_Pedido\": 1,\n            \"pedido\": {\n                \"id_pedido\": 1,\n                \"valor_total\": 60.0,\n                \"frete_entrega\": 15.0,\n                \"data_pedido\": \"12/05/2024\",\n                \"data_entrega\": \"19/05/2024\",\n                \"usuario\": {\n                    \"id_usuario\": 1,\n                    \"nome\": \"Kauê Fernandes Braz\",\n                    \"email\": \"rm97768@fiap.com.br\",\n                    \"senha\": \"12345678\",\n                    \"telefone\": \"123456789\",\n                    \"endereco\": \"Rua FIAP\",\n                    \"cep\": \"023231231\",\n                    \"cidade\": \"São Paulo\",\n                    \"estado\": \"São Paulo\",\n                    \"cpf\": \"54610446898\",\n                    \"data_cadastro\": \"05/05/2024\",\n                    \"data_nascimento\": \"23/03/2005\",\n                    \"tipo_pagamento\": \"Débito\",\n                    \"sexo\": \"Masculino\"\n                }\n            },\n            \"quantidade\": 2,\n            \"preco\": 50.0\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/item/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"item",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Deletar Usuario",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/usuario",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"usuario"
-					]
+			"name": "Pagamento",
+			"item": [
+				{
+					"name": "Realizar Pagamento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"num_cartao\": \"1234567890123456\",\n        \"nome_cartao\": \"Kauê Fernandes Braz\",\n        \"data_validade\": \"23/03/2031\",\n        \"cvv\": 123,\n        \"apelido_cartao\": \"Cartão de débito\",\n        \"usuario\": {\n            \"id_usuario\": 1,\n            \"nome\": \"Kauê Fernandes Braz\",\n            \"email\": \"rm97768@fiap.com.br\",\n            \"senha\": \"12345678\",\n            \"telefone\": \"123456789\",\n            \"endereco\": \"Rua FIAP\",\n            \"cep\": \"023231231\",\n            \"cidade\": \"São Paulo\",\n            \"estado\": \"São Paulo\",\n            \"cpf\": \"54610446898\",\n            \"data_cadastro\": \"05/05/2024\",\n            \"data_nascimento\": \"27/03/2005\",\n            \"tipo_pagamento\": \"Débito\",\n            \"sexo\": \"Masculino\"\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/pagamento",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Pagamento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/pagamento",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Pagamento",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/pagamento/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pagamento",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Pagamento",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"id_pagamento\": 1,\n        \"num_cartao\": \"1234567890123456\",\n        \"nome_cartao\": \"Kauê Fernandes Braz\",\n        \"data_validade\": \"23/03/2031\",\n        \"cvv\": 123,\n        \"apelido_cartao\": \"Cartão de débito\",\n        \"usuario\": {\n            \"id_usuario\": 1,\n            \"nome\": \"Kauê Fernandes Braz\",\n            \"email\": \"rm97768@fiap.com.br\",\n            \"senha\": \"12345678\",\n            \"telefone\": \"123456789\",\n            \"endereco\": \"Rua FIAP\",\n            \"cep\": \"023231231\",\n            \"cidade\": \"São Paulo\",\n            \"estado\": \"São Paulo\",\n            \"cpf\": \"54610446898\",\n            \"data_cadastro\": \"05/05/2024\",\n            \"data_nascimento\": \"27/03/2005\",\n            \"tipo_pagamento\": \"Débito\",\n            \"sexo\": \"Masculino\"\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/pagamento/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pagamento",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Realizar Pedido",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/pedido",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"pedido"
-					]
+			"name": "ItemPedido_Pedido",
+			"item": [
+				{
+					"name": "Adicionar ItemPedido_Pedido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"pedido\": {\n            \"id_pedido\": 1,\n            \"valor_total\": 60.0,\n            \"frete_entrega\": 15.0,\n            \"data_pedido\": \"12/05/2024\",\n            \"data_entrega\": \"19/05/2024\",\n            \"usuario\": {\n                \"id_usuario\": 1,\n                \"nome\": \"Kauê Fernandes Braz\",\n                \"email\": \"rm97768@fiap.com.br\",\n                \"senha\": \"12345678\",\n                \"telefone\": \"123456789\",\n                \"endereco\": \"Rua FIAP\",\n                \"cep\": \"023231231\",\n                \"cidade\": \"São Paulo\",\n                \"estado\": \"São Paulo\",\n                \"cpf\": \"54610446898\",\n                \"data_cadastro\": \"05/05/2024\",\n                \"data_nascimento\": \"23/03/2005\",\n                \"tipo_pagamento\": \"Débito\",\n                \"sexo\": \"Masculino\"\n            }\n        },\n        \"quantidade\": 5,\n        \"preco\": 50.0\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/itempedidopedido",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itempedidopedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar ItemPedido_Pedido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/itempedidopedido",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itempedidopedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar ItemPedido_Pedido",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/itempedidopedido/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itempedidopedido",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar ItemPedido_Pedido",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/itempedidopedido/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itempedidopedido",
+								"2"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Listar Pedido",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/pedido",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"pedido"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Atualizar Pedido",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/pedido",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"pedido"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Deletar Pedido",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/pedido",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"pedido"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Adicionar Item",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/item",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"item"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Listar Items",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/item",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"item"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Remover Item",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/item/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"item",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Realizar Pagamento",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/pagamento",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"pagamento"
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }

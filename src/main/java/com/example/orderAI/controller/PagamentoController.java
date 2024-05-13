@@ -22,6 +22,9 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.orderAI.model.Pagamento;
 import com.example.orderAI.repository.PagamentoRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

@@ -50,7 +50,7 @@ public class DatabaseSeeder implements CommandLineRunner{
                 .estado("São Paulo")
                 .cpf("54610446898")
                 .data_cadastro(LocalDate.now().minusWeeks(1))
-                .data_nascimento(LocalDate.now().minusWeeks(1))
+                .data_nascimento(LocalDate.now().minusWeeks(998))
                 .tipo_pagamento("Débito")
                 .sexo("Masculino")
                 .build()
