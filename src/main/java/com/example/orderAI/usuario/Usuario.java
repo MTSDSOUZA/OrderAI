@@ -1,17 +1,14 @@
-package com.example.orderAI.model;
+package com.example.orderAI.usuario;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.*;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.example.orderAI.validation.TipoPagamento;
 import com.example.orderAI.validation.TipoSexo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,6 +24,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "usuario")
 public class Usuario{
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_usuario;

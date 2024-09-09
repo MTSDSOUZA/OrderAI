@@ -1,14 +1,11 @@
-package com.example.orderAI.model;
+package com.example.orderAI.pedido;
 
 import java.time.LocalDate;
 
+import com.example.orderAI.usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -23,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "pedido")
 public class Pedido {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_pedido;

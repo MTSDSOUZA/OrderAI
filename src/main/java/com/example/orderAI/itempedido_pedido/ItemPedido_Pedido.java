@@ -1,10 +1,7 @@
-package com.example.orderAI.model;
+package com.example.orderAI.itempedido_pedido;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.example.orderAI.pedido.Pedido;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -17,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "itempedido_pedido")
 public class ItemPedido_Pedido {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_itemPedido_Pedido;

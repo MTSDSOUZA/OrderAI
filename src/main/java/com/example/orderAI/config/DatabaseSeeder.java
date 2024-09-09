@@ -7,16 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.orderAI.model.ItemPedido;
-import com.example.orderAI.model.ItemPedido_Pedido;
-import com.example.orderAI.model.Pagamento;
-import com.example.orderAI.model.Pedido;
-import com.example.orderAI.model.Usuario;
-import com.example.orderAI.repository.ItemPedidoRepository;
-import com.example.orderAI.repository.ItemPedido_PedidoRepository;
-import com.example.orderAI.repository.PagamentoRepository;
-import com.example.orderAI.repository.PedidoRepository;
-import com.example.orderAI.repository.UsuarioRepository;
+import com.example.orderAI.itempedido.ItemPedido;
+import com.example.orderAI.itempedido_pedido.ItemPedido_Pedido;
+import com.example.orderAI.pagamento.Pagamento;
+import com.example.orderAI.pedido.Pedido;
+import com.example.orderAI.usuario.Usuario;
+import com.example.orderAI.itempedido.ItemPedidoRepository;
+import com.example.orderAI.itempedido_pedido.ItemPedido_PedidoRepository;
+import com.example.orderAI.pagamento.PagamentoRepository;
+import com.example.orderAI.pedido.PedidoRepository;
+import com.example.orderAI.usuario.UsuarioRepository;
 
 @Configuration
 public class DatabaseSeeder implements CommandLineRunner{

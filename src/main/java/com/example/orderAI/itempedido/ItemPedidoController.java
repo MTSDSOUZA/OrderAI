@@ -1,4 +1,4 @@
-package com.example.orderAI.controller;
+package com.example.orderAI.itempedido;
 
 import java.util.List;
 
@@ -8,6 +8,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,10 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-
-import com.example.orderAI.model.Pedido;
-import com.example.orderAI.repository.PedidoRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,30 +29,30 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/pedido")
-@CacheConfig(cacheNames = "pedidos")
+@RequestMapping("/item")
+@CacheConfig(cacheNames = "items")
 @Slf4j
-@Tag(name = "pedido", description = "Pedido que o usuário vai fazer")
-public class PedidoController {
+@Tag(name = "itemPedido", description = "Item que pode ser inserido no pedido")
+public class ItemPedidoController {
     @Autowired
-    PedidoRepository repositoryPedido;
+    ItemPedidoRepository repositoryItemPedido;
 
     @GetMapping
     @Cacheable
     @Operation(
-        summary = "Listar Pedido"
+        summary = "Listar Items"
     )
-    public List<Pedido> index() {
-        return repositoryPedido.findAll();
+    public List<ItemPedido> index() {
+        return repositoryItemPedido.findAll();
     }
 
     @GetMapping("{id}")
     @Operation(
-        summary = "Listar Pedido por id"
+        summary = "Listar Item por id"
     )
-    public ResponseEntity<Pedido> listarPedido(@PathVariable Long id){
+    public ResponseEntity<ItemPedido> listarItem(@PathVariable Long id){
 
-        return repositoryPedido
+        return repositoryItemPedido
                 .findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -64,40 +62,40 @@ public class PedidoController {
     @ResponseStatus(code = HttpStatus.CREATED)
     @CacheEvict(allEntries = true)
     @Operation(
-        summary = "Cadastrar Pedido"
+        summary = "Cadastrar Item"
     )
     @ApiResponses({ 
         @ApiResponse(responseCode = "201"),
         @ApiResponse(responseCode = "400")
     })
-    public Pedido create(@RequestBody @Valid Pedido pedido) {
-        log.info("Cadastrando pedido: {}", pedido);
-        repositoryPedido.save(pedido);
-        return pedido;
+    public ItemPedido create(@RequestBody @Valid ItemPedido item) {
+        log.info("Cadastrando Item: {}", item);
+        repositoryItemPedido.save(item);
+        return item;
     }
 
-    @DeleteMapping("{id_pedido}")
+    @DeleteMapping("{id_itempedido}")
     @ResponseStatus(NO_CONTENT)
     @CacheEvict(allEntries = true)
     @Operation(
-        summary = "Deletar Pedido"
+        summary = "Deletar Item"
     )
     @ApiResponses({ 
         @ApiResponse(responseCode = "204"),
         @ApiResponse(responseCode = "404"),
         @ApiResponse(responseCode = "401")
     })
-    public void destroy(@PathVariable Long id_pedido) {
-        log.info("Apagando pedido");
+    public void destroy(@PathVariable Long id_itempedido) {
+        log.info("Apagando Item");
 
-        verificarSeExistePedido(id_pedido);
-        repositoryPedido.deleteById(id_pedido);
+        verificarSeExisteItem(id_itempedido);
+        repositoryItemPedido.deleteById(id_itempedido);
     }
 
-    @PutMapping("{id_pedido}")
+    @PutMapping("{id_itempedido}")
     @CacheEvict(allEntries = true)
     @Operation(
-        summary = "Atualizar Pedido"
+        summary = "Atualizar Item"
     )
     @ApiResponses({ 
         @ApiResponse(responseCode = "200"),
@@ -105,20 +103,20 @@ public class PedidoController {
         @ApiResponse(responseCode = "401"),
         @ApiResponse(responseCode = "404")
     })
-    public Pedido update(@PathVariable Long id_pedido, @RequestBody Pedido pedido){
-        log.info("atualizando pedido com id {} para {}", id_pedido, pedido);
+    public ItemPedido update(@PathVariable Long id_itempedido, @RequestBody ItemPedido item){
+        log.info("atualizando Item com id {} para {}", id_itempedido, item);
 
-        verificarSeExistePedido(id_pedido);
-        pedido.setId_pedido(id_pedido);
-        return repositoryPedido.save(pedido);
+        verificarSeExisteItem(id_itempedido);
+        item.setId_itempedido(id_itempedido);
+        return repositoryItemPedido.save(item);
     }
 
-    private void verificarSeExistePedido(Long id_pedido) {
-        repositoryPedido
-            .findById(id_pedido)
+    private void verificarSeExisteItem(Long id_itempedido) {
+        repositoryItemPedido
+            .findById(id_itempedido)
             .orElseThrow(() -> new ResponseStatusException(
                                 HttpStatus.NOT_FOUND, 
-                                "Não existe pedido com o id informado. Consulte lista em /pedido"
+                                "Não existe Item com o id informado. Consulte lista em /item"
                             ));
     }
 }

@@ -1,10 +1,7 @@
-package com.example.orderAI.controller;
+package com.example.orderAI.usuario;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
-import com.example.orderAI.model.Usuario;
-import com.example.orderAI.repository.UsuarioRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -16,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -31,6 +29,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
 @RestController
@@ -39,28 +38,25 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 @Tag(name = "usuário", description = "Usuário que vai fazer o pedido")
 public class UsuarioController {
+
     @Autowired
-    UsuarioRepository repositoryUsuario;
+    UsuarioService usuarioService;
 
     @GetMapping
     @Cacheable
     @Operation(
         summary = "Listar Usuario"
     )
-    public List<Usuario> index() {
-        return repositoryUsuario.findAll();
+    public List<Usuario> findAll() {
+        return usuarioService.findAll();
     }
 
     @GetMapping("{id}")
     @Operation(
         summary = "Listar Usuario por id"
     )
-    public ResponseEntity<Usuario> listarUsuario(@PathVariable Long id){
-
-        return repositoryUsuario
-                .findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Usuario> getById(@PathVariable Long id) {
+        return ResponseEntity.of(Optional.ofNullable(usuarioService.getById(id)));
     }
 
     @PostMapping
@@ -73,10 +69,17 @@ public class UsuarioController {
         @ApiResponse(responseCode = "201"),
         @ApiResponse(responseCode = "400")
     })
-    public Usuario create(@RequestBody @Valid Usuario usuario) {
-        log.info("Cadastrando usuário: {}", usuario);
-        repositoryUsuario.save(usuario);
-        return usuario;
+    public ResponseEntity<Usuario> create(@RequestBody Usuario user, UriComponentsBuilder uriBuilder){
+        usuarioService.create(user);
+
+        var uri = uriBuilder
+                .path("/usuario/{id}")
+                .buildAndExpand(user.getId_usuario())
+                .toUri();
+
+        return ResponseEntity
+                .created(uri)
+                .body(user);
     }
 
     @DeleteMapping("{id_usuario}")
@@ -90,11 +93,9 @@ public class UsuarioController {
         @ApiResponse(responseCode = "404"),
         @ApiResponse(responseCode = "401")
     })
-    public void destroy(@PathVariable Long id_usuario) {
+    public void delete(@PathVariable Long id_usuario) {
         log.info("Apagando usuário");
-
-        verificarSeExisteUsuario(id_usuario);
-        repositoryUsuario.deleteById(id_usuario);
+        usuarioService.delete(id_usuario);
     }
 
     @PutMapping("{id_usuario}")
@@ -108,21 +109,10 @@ public class UsuarioController {
         @ApiResponse(responseCode = "401"),
         @ApiResponse(responseCode = "404")
     })
-    public Usuario update(@PathVariable Long id_usuario, @RequestBody Usuario usuario){
-        log.info("atualizando usuário com id {} para {}", id_usuario, usuario);
-
-        verificarSeExisteUsuario(id_usuario);
-        usuario.setId_usuario(id_usuario);
-        return repositoryUsuario.save(usuario);
-    }
-
-    private void verificarSeExisteUsuario(Long id_usuario) {
-        repositoryUsuario
-            .findById(id_usuario)
-            .orElseThrow(() -> new ResponseStatusException(
-                                HttpStatus.NOT_FOUND, 
-                                "Não existe usuário com o id informado. Consulte lista em /usuario"
-                            ));
+    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
+        log.info("Atualizando usuário com id {} para {}", id, usuario);
+        Usuario updatedUser = usuarioService.update(id, usuario);
+        return ResponseEntity.ok(updatedUser);
     }
 
 }

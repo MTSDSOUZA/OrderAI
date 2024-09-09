@@ -1,7 +1,7 @@
-package com.example.orderAI.controller;
+package com.example.orderAI.pedido;
 
 import java.util.List;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
-import com.example.orderAI.model.Pagamento;
-import com.example.orderAI.repository.PagamentoRepository;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,30 +28,30 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/pagamento")
-@CacheConfig(cacheNames = "pagamentos")
+@RequestMapping("/pedido")
+@CacheConfig(cacheNames = "pedidos")
 @Slf4j
-@Tag(name = "pagamaneto", description = "Forma de pagamento do usuário")
-public class PagamentoController {
+@Tag(name = "pedido", description = "Pedido que o usuário vai fazer")
+public class PedidoController {
     @Autowired
-    PagamentoRepository repositoryPagamento;
+    PedidoRepository repositoryPedido;
 
     @GetMapping
     @Cacheable
     @Operation(
-        summary = "Listar Pagamento"
+        summary = "Listar Pedido"
     )
-    public List<Pagamento> index() {
-        return repositoryPagamento.findAll();
+    public List<Pedido> index() {
+        return repositoryPedido.findAll();
     }
 
     @GetMapping("{id}")
     @Operation(
-        summary = "Listar Pagamento por id"
+        summary = "Listar Pedido por id"
     )
-    public ResponseEntity<Pagamento> listarPagamento(@PathVariable Long id){
+    public ResponseEntity<Pedido> listarPedido(@PathVariable Long id){
 
-        return repositoryPagamento
+        return repositoryPedido
                 .findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -63,40 +61,40 @@ public class PagamentoController {
     @ResponseStatus(code = HttpStatus.CREATED)
     @CacheEvict(allEntries = true)
     @Operation(
-        summary = "Cadastrar Pagamento"
+        summary = "Cadastrar Pedido"
     )
     @ApiResponses({ 
         @ApiResponse(responseCode = "201"),
         @ApiResponse(responseCode = "400")
     })
-    public Pagamento create(@RequestBody @Valid Pagamento pagamento) {
-        log.info("Cadastrando pagamento: {}", pagamento);
-        repositoryPagamento.save(pagamento);
-        return pagamento;
+    public Pedido create(@RequestBody @Valid Pedido pedido) {
+        log.info("Cadastrando pedido: {}", pedido);
+        repositoryPedido.save(pedido);
+        return pedido;
     }
 
-    @DeleteMapping("{id_pagamento}")
+    @DeleteMapping("{id_pedido}")
     @ResponseStatus(NO_CONTENT)
     @CacheEvict(allEntries = true)
     @Operation(
-        summary = "Deletar Pagamento"
+        summary = "Deletar Pedido"
     )
     @ApiResponses({ 
         @ApiResponse(responseCode = "204"),
         @ApiResponse(responseCode = "404"),
         @ApiResponse(responseCode = "401")
     })
-    public void destroy(@PathVariable Long id_pagamento) {
-        log.info("Apagando pagamento");
+    public void destroy(@PathVariable Long id_pedido) {
+        log.info("Apagando pedido");
 
-        verificarSeExistePagamento(id_pagamento);
-        repositoryPagamento.deleteById(id_pagamento);
+        verificarSeExistePedido(id_pedido);
+        repositoryPedido.deleteById(id_pedido);
     }
 
-    @PutMapping("{id_pagamento}")
+    @PutMapping("{id_pedido}")
     @CacheEvict(allEntries = true)
     @Operation(
-        summary = "Atualizar Pagamento"
+        summary = "Atualizar Pedido"
     )
     @ApiResponses({ 
         @ApiResponse(responseCode = "200"),
@@ -104,20 +102,20 @@ public class PagamentoController {
         @ApiResponse(responseCode = "401"),
         @ApiResponse(responseCode = "404")
     })
-    public Pagamento update(@PathVariable Long id_pagamento, @RequestBody Pagamento pagamento){
-        log.info("atualizando pagamento com id {} para {}", id_pagamento, pagamento);
+    public Pedido update(@PathVariable Long id_pedido, @RequestBody Pedido pedido){
+        log.info("atualizando pedido com id {} para {}", id_pedido, pedido);
 
-        verificarSeExistePagamento(id_pagamento);
-        pagamento.setId_pagamento(id_pagamento);
-        return repositoryPagamento.save(pagamento);
+        verificarSeExistePedido(id_pedido);
+        pedido.setId_pedido(id_pedido);
+        return repositoryPedido.save(pedido);
     }
 
-    private void verificarSeExistePagamento(Long id_pagamento) {
-        repositoryPagamento
-            .findById(id_pagamento)
+    private void verificarSeExistePedido(Long id_pedido) {
+        repositoryPedido
+            .findById(id_pedido)
             .orElseThrow(() -> new ResponseStatusException(
                                 HttpStatus.NOT_FOUND, 
-                                "Não existe pagamento com o id informado. Consulte lista em /pagamento"
+                                "Não existe pedido com o id informado. Consulte lista em /pedido"
                             ));
     }
 }

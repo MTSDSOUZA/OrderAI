@@ -1,10 +1,7 @@
-package com.example.orderAI.model;
+package com.example.orderAI.pagamento;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.example.orderAI.usuario.Usuario;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -18,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "pagamento")
 public class Pagamento {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_pagamento;
