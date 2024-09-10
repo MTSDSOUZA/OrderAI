@@ -2,6 +2,8 @@ package com.example.orderAI.itempedido;
 
 import java.util.List;
 
+import com.example.orderAI.itempedido_pedido.ItemPedido_Pedido;
+import com.example.orderAI.itempedido_pedido.ItemPedido_PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -35,28 +37,37 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "itemPedido", description = "Item que pode ser inserido no pedido")
 public class ItemPedidoController {
     @Autowired
-    ItemPedidoRepository repositoryItemPedido;
+    private ItemPedidoService itemPedidoService;
+
+    @Autowired
+    private ItemPedido_PedidoService itemPedido_PedidoService;
 
     @GetMapping
     @Cacheable
     @Operation(
         summary = "Listar Items"
     )
-    public List<ItemPedido> index() {
-        return repositoryItemPedido.findAll();
+    public ResponseEntity<List<ItemPedido>> findAll() {
+        List<ItemPedido> itens = itemPedidoService.findAll();
+        return ResponseEntity.ok(itens);
+    }
+
+    @GetMapping("/itempedido_pedido/{id_itempedido_pedido}")
+    public ResponseEntity<List<ItemPedido>> findByItemPedido_Pedido(@PathVariable Long id_itempedido_pedido) {
+        ItemPedido_Pedido itemPedido_Pedido = itemPedido_PedidoService.getById(id_itempedido_pedido);
+        List<ItemPedido> itens = itemPedidoService.findByItemPedido_Pedido(itemPedido_Pedido);
+        return ResponseEntity.ok(itens);
     }
 
     @GetMapping("{id}")
     @Operation(
         summary = "Listar Item por id"
     )
-    public ResponseEntity<ItemPedido> listarItem(@PathVariable Long id){
-
-        return repositoryItemPedido
-                .findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ItemPedido> getById(@PathVariable Long id) {
+        ItemPedido itemPedido = itemPedidoService.getById(id);
+        return ResponseEntity.ok(itemPedido);
     }
+
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -68,10 +79,9 @@ public class ItemPedidoController {
         @ApiResponse(responseCode = "201"),
         @ApiResponse(responseCode = "400")
     })
-    public ItemPedido create(@RequestBody @Valid ItemPedido item) {
-        log.info("Cadastrando Item: {}", item);
-        repositoryItemPedido.save(item);
-        return item;
+    public ResponseEntity<ItemPedido> create(@RequestBody ItemPedido itemPedido) {
+        ItemPedido newItem = itemPedidoService.create(itemPedido);
+        return ResponseEntity.ok(newItem);
     }
 
     @DeleteMapping("{id_itempedido}")
@@ -85,11 +95,9 @@ public class ItemPedidoController {
         @ApiResponse(responseCode = "404"),
         @ApiResponse(responseCode = "401")
     })
-    public void destroy(@PathVariable Long id_itempedido) {
-        log.info("Apagando Item");
-
-        verificarSeExisteItem(id_itempedido);
-        repositoryItemPedido.deleteById(id_itempedido);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        itemPedidoService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("{id_itempedido}")
@@ -103,20 +111,8 @@ public class ItemPedidoController {
         @ApiResponse(responseCode = "401"),
         @ApiResponse(responseCode = "404")
     })
-    public ItemPedido update(@PathVariable Long id_itempedido, @RequestBody ItemPedido item){
-        log.info("atualizando Item com id {} para {}", id_itempedido, item);
-
-        verificarSeExisteItem(id_itempedido);
-        item.setId_itempedido(id_itempedido);
-        return repositoryItemPedido.save(item);
-    }
-
-    private void verificarSeExisteItem(Long id_itempedido) {
-        repositoryItemPedido
-            .findById(id_itempedido)
-            .orElseThrow(() -> new ResponseStatusException(
-                                HttpStatus.NOT_FOUND, 
-                                "Não existe Item com o id informado. Consulte lista em /item"
-                            ));
+    public ResponseEntity<ItemPedido> update(@PathVariable Long id, @RequestBody ItemPedido itemPedido) {
+        ItemPedido updatedItem = itemPedidoService.update(id, itemPedido);
+        return ResponseEntity.ok(updatedItem);
     }
 }

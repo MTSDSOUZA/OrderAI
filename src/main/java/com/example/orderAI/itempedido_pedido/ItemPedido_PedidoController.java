@@ -4,6 +4,8 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 import java.util.List;
 
+import com.example.orderAI.pedido.Pedido;
+import com.example.orderAI.pedido.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,42 +33,52 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "ItemPedido_Pedido", description = "Faz a associação entre o itemPedido e Pedido")
 public class ItemPedido_PedidoController {
     @Autowired
-    ItemPedido_PedidoRepository repositoryItemPedido_Pedido;
+    private ItemPedido_PedidoService itemPedido_pedidoService;
+
+    @Autowired
+    private PedidoService pedidoService;
 
 
     @GetMapping
     @Operation(
         summary = "Listar Associação de Pedido e ItemPedido"
     )
-    public List<ItemPedido_Pedido> index() {
-        return repositoryItemPedido_Pedido.findAll();
+    public ResponseEntity<List<ItemPedido_Pedido>> findAll() {
+        List<ItemPedido_Pedido> itens = itemPedido_pedidoService.findAll();
+        return ResponseEntity.ok(itens);
     }
 
     @Operation(
-        summary = "Listar associação de Pedido e ItemPedido por id"
+        summary = "Listar itens de um pedido em específico"
     )
-    @GetMapping("{id}")
-    public ResponseEntity<ItemPedido_Pedido> listarItem(@PathVariable Long id){
+    @GetMapping("/pedido/{id_pedido}")
+    public ResponseEntity<List<ItemPedido_Pedido>> findByPedido(@PathVariable Long id_pedido) {
+        Pedido pedido = pedidoService.getById(id_pedido);
+        List<ItemPedido_Pedido> itens = itemPedido_pedidoService.findByPedido(pedido);
+        return ResponseEntity.ok(itens);
+    }
 
-        return repositoryItemPedido_Pedido
-                .findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-            }
-    
+    @Operation(
+            summary = "Listar associação de Pedido e ItemPedido por id"
+    )
+    @GetMapping("/{id}")
+    public ResponseEntity<ItemPedido_Pedido> getById(@PathVariable Long id) {
+        ItemPedido_Pedido item = itemPedido_pedidoService.getById(id);
+        return ResponseEntity.ok(item);
+    }
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     @Operation(
         summary = "Cadastrar associação de pedido e itemPedido"
     )
-    @ApiResponses({ 
+    @ApiResponses({
         @ApiResponse(responseCode = "201"),
         @ApiResponse(responseCode = "400"),
     })
-    public ItemPedido_Pedido create(@RequestBody @Valid ItemPedido_Pedido itempedido_pedido) {
-        log.info("Cadastrando ItemPedido_Pedido: {}", itempedido_pedido);
-        repositoryItemPedido_Pedido.save(itempedido_pedido);
-        return itempedido_pedido;
+    public ResponseEntity<ItemPedido_Pedido> create(@RequestBody ItemPedido_Pedido itemPedido_pedido) {
+        ItemPedido_Pedido newItem = itemPedido_pedidoService.create(itemPedido_pedido);
+        return ResponseEntity.ok(newItem);
     }
 
     @DeleteMapping("{id}")
@@ -74,42 +86,29 @@ public class ItemPedido_PedidoController {
     @Operation(
         summary = "Deletar associação de pedido e itemPedido"
     )
-    @ApiResponses({ 
+    @ApiResponses({
         @ApiResponse(responseCode = "204"),
         @ApiResponse(responseCode = "404"),
         @ApiResponse(responseCode = "401")
     })
-    public void destroy(@PathVariable Long id) {
-        log.info("Apagando ItemPedido_Pedido");
-
-        verificarSeExisteItem(id);
-        repositoryItemPedido_Pedido.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        itemPedido_pedidoService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("{id}")
     @Operation(
         summary = "Atualizar associação de pedido e itemPedido"
     )
-    @ApiResponses({ 
+    @ApiResponses({
         @ApiResponse(responseCode = "200"),
         @ApiResponse(responseCode = "400"),
         @ApiResponse(responseCode = "401"),
         @ApiResponse(responseCode = "404")
     })
-    public ItemPedido_Pedido update(@PathVariable Long id_itemPedido_Pedido, @RequestBody ItemPedido_Pedido item){
-        log.info("atualizando ItemPedido_Pedido com id {} para {}", id_itemPedido_Pedido, item);
-
-        verificarSeExisteItem(id_itemPedido_Pedido);
-        item.setId_itemPedido_Pedido(id_itemPedido_Pedido);
-        return repositoryItemPedido_Pedido.save(item);
+    public ResponseEntity<ItemPedido_Pedido> update(@PathVariable Long id, @RequestBody ItemPedido_Pedido itemPedido_pedido) {
+        ItemPedido_Pedido updatedItem = itemPedido_pedidoService.update(id, itemPedido_pedido);
+        return ResponseEntity.ok(updatedItem);
     }
 
-    private void verificarSeExisteItem(Long ItemPedido_Pedido) {
-        repositoryItemPedido_Pedido
-            .findById(ItemPedido_Pedido)
-            .orElseThrow(() -> new ResponseStatusException(
-                                HttpStatus.NOT_FOUND, 
-                                "Não existe ItemPedido_Pedido com o id informado."
-                            ));
-    }
 }

@@ -1,7 +1,10 @@
 package com.example.orderAI.pedido;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.example.orderAI.usuario.Usuario;
+import com.example.orderAI.usuario.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -31,91 +34,75 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/pedido")
 @CacheConfig(cacheNames = "pedidos")
 @Slf4j
-@Tag(name = "pedido", description = "Pedido que o usuário vai fazer")
+@Tag(name = "pedido", description = "Gerenciamento de pedidos do usuário")
 public class PedidoController {
+
     @Autowired
-    PedidoRepository repositoryPedido;
+    PedidoService pedidoService;
+
+    @Autowired
+    UsuarioService usuarioService;
 
     @GetMapping
     @Cacheable
-    @Operation(
-        summary = "Listar Pedido"
-    )
-    public List<Pedido> index() {
-        return repositoryPedido.findAll();
+    @Operation(summary = "Listar todos os Pedidos")
+    public List<Pedido> findAll() {
+        return pedidoService.findAll();
+    }
+
+    @GetMapping("/usuario/{id_usuario}")
+    @Operation(summary = "Listar todos os Pedidos do usuário")
+    public ResponseEntity<List<Pedido>> findByUsuario(@PathVariable Long id_usuario) {
+        Usuario usuario = usuarioService.getById(id_usuario);
+        List<Pedido> pedidos = pedidoService.findByUsuario(usuario);
+        return ResponseEntity.ok(pedidos);
     }
 
     @GetMapping("{id}")
-    @Operation(
-        summary = "Listar Pedido por id"
-    )
-    public ResponseEntity<Pedido> listarPedido(@PathVariable Long id){
-
-        return repositoryPedido
-                .findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @Operation(summary = "Listar Pedido por id")
+    public ResponseEntity<Pedido> getById(@PathVariable Long id) {
+        return ResponseEntity.of(Optional.ofNullable(pedidoService.getById(id)));
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     @CacheEvict(allEntries = true)
-    @Operation(
-        summary = "Cadastrar Pedido"
-    )
-    @ApiResponses({ 
-        @ApiResponse(responseCode = "201"),
-        @ApiResponse(responseCode = "400")
+    @Operation(summary = "Cadastrar Pedido")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201"),
+            @ApiResponse(responseCode = "400")
     })
     public Pedido create(@RequestBody @Valid Pedido pedido) {
         log.info("Cadastrando pedido: {}", pedido);
-        repositoryPedido.save(pedido);
-        return pedido;
+        return pedidoService.create(pedido);
     }
 
     @DeleteMapping("{id_pedido}")
     @ResponseStatus(NO_CONTENT)
     @CacheEvict(allEntries = true)
-    @Operation(
-        summary = "Deletar Pedido"
-    )
-    @ApiResponses({ 
-        @ApiResponse(responseCode = "204"),
-        @ApiResponse(responseCode = "404"),
-        @ApiResponse(responseCode = "401")
+    @Operation(summary = "Deletar Pedido")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204"),
+            @ApiResponse(responseCode = "404"),
+            @ApiResponse(responseCode = "401")
     })
-    public void destroy(@PathVariable Long id_pedido) {
-        log.info("Apagando pedido");
-
-        verificarSeExistePedido(id_pedido);
-        repositoryPedido.deleteById(id_pedido);
+    public void delete(@PathVariable Long id_pedido) {
+        log.info("Apagando pedido com id {}", id_pedido);
+        pedidoService.delete(id_pedido);
     }
 
     @PutMapping("{id_pedido}")
     @CacheEvict(allEntries = true)
-    @Operation(
-        summary = "Atualizar Pedido"
-    )
-    @ApiResponses({ 
-        @ApiResponse(responseCode = "200"),
-        @ApiResponse(responseCode = "400"),
-        @ApiResponse(responseCode = "401"),
-        @ApiResponse(responseCode = "404")
+    @Operation(summary = "Atualizar Pedido")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "400"),
+            @ApiResponse(responseCode = "401"),
+            @ApiResponse(responseCode = "404")
     })
-    public Pedido update(@PathVariable Long id_pedido, @RequestBody Pedido pedido){
-        log.info("atualizando pedido com id {} para {}", id_pedido, pedido);
-
-        verificarSeExistePedido(id_pedido);
-        pedido.setId_pedido(id_pedido);
-        return repositoryPedido.save(pedido);
-    }
-
-    private void verificarSeExistePedido(Long id_pedido) {
-        repositoryPedido
-            .findById(id_pedido)
-            .orElseThrow(() -> new ResponseStatusException(
-                                HttpStatus.NOT_FOUND, 
-                                "Não existe pedido com o id informado. Consulte lista em /pedido"
-                            ));
+    public ResponseEntity<Pedido> update(@PathVariable Long id_pedido, @RequestBody Pedido pedido) {
+        log.info("Atualizando pedido com id {} para {}", id_pedido, pedido);
+        Pedido updatedPedido = pedidoService.update(id_pedido, pedido);
+        return ResponseEntity.ok(updatedPedido);
     }
 }

@@ -1,7 +1,12 @@
 package com.example.orderAI.pagamento;
 
 import java.util.List;
+import java.util.Optional;
+
 import static org.springframework.http.HttpStatus.NO_CONTENT;
+
+import com.example.orderAI.usuario.Usuario;
+import com.example.orderAI.usuario.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,27 +39,34 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "pagamaneto", description = "Forma de pagamento do usuário")
 public class PagamentoController {
     @Autowired
-    PagamentoRepository repositoryPagamento;
+    PagamentoService pagamentoService;
+
+    @Autowired
+    UsuarioService usuarioService;
 
     @GetMapping
     @Cacheable
     @Operation(
         summary = "Listar Pagamento"
     )
-    public List<Pagamento> index() {
-        return repositoryPagamento.findAll();
+    public List<Pagamento> findAll() {
+        return pagamentoService.findAll();
+    }
+
+    @GetMapping("/usuario/{id_usuario}")
+    public ResponseEntity<List<Pagamento>> findByUsuario(@PathVariable Long id_usuario) {
+        Usuario usuario = usuarioService.getById(id_usuario);
+        List<Pagamento> pagamentos = pagamentoService.findByUsuario(usuario);
+        return ResponseEntity.ok(pagamentos);
     }
 
     @GetMapping("{id}")
     @Operation(
         summary = "Listar Pagamento por id"
     )
-    public ResponseEntity<Pagamento> listarPagamento(@PathVariable Long id){
+    public ResponseEntity<Pagamento> getById(@PathVariable Long id){
 
-        return repositoryPagamento
-                .findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.of(Optional.ofNullable(pagamentoService.getById(id)));
     }
 
     @PostMapping
@@ -66,10 +79,18 @@ public class PagamentoController {
         @ApiResponse(responseCode = "201"),
         @ApiResponse(responseCode = "400")
     })
-    public Pagamento create(@RequestBody @Valid Pagamento pagamento) {
+    public ResponseEntity<Pagamento> create(@RequestBody @Valid Pagamento pagamento, UriComponentsBuilder uriBuilder) {
         log.info("Cadastrando pagamento: {}", pagamento);
-        repositoryPagamento.save(pagamento);
-        return pagamento;
+        pagamentoService.create(pagamento);
+
+        var uri = uriBuilder
+                .path("/pagamento/{id}")
+                .buildAndExpand(pagamento.getId_pagamento())
+                .toUri();
+
+        return ResponseEntity
+                .created(uri)
+                .body(pagamento);
     }
 
     @DeleteMapping("{id_pagamento}")
@@ -83,11 +104,9 @@ public class PagamentoController {
         @ApiResponse(responseCode = "404"),
         @ApiResponse(responseCode = "401")
     })
-    public void destroy(@PathVariable Long id_pagamento) {
+    public void delete(@PathVariable Long id_pagamento) {
         log.info("Apagando pagamento");
-
-        verificarSeExistePagamento(id_pagamento);
-        repositoryPagamento.deleteById(id_pagamento);
+        pagamentoService.delete(id_pagamento);
     }
 
     @PutMapping("{id_pagamento}")
@@ -101,20 +120,10 @@ public class PagamentoController {
         @ApiResponse(responseCode = "401"),
         @ApiResponse(responseCode = "404")
     })
-    public Pagamento update(@PathVariable Long id_pagamento, @RequestBody Pagamento pagamento){
-        log.info("atualizando pagamento com id {} para {}", id_pagamento, pagamento);
-
-        verificarSeExistePagamento(id_pagamento);
-        pagamento.setId_pagamento(id_pagamento);
-        return repositoryPagamento.save(pagamento);
+    public ResponseEntity<Pagamento> update(@PathVariable Long id, @RequestBody Pagamento pagamento) {
+        log.info("Atualizando pagamento com id {} para {}", id, pagamento);
+        Pagamento updatedPagamento = pagamentoService.update(id, pagamento);
+        return ResponseEntity.ok(updatedPagamento);
     }
 
-    private void verificarSeExistePagamento(Long id_pagamento) {
-        repositoryPagamento
-            .findById(id_pagamento)
-            .orElseThrow(() -> new ResponseStatusException(
-                                HttpStatus.NOT_FOUND, 
-                                "Não existe pagamento com o id informado. Consulte lista em /pagamento"
-                            ));
-    }
 }

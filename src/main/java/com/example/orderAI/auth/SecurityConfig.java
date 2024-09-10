@@ -7,13 +7,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
     @Bean
-    public SecurityFilterChain config(HttpSecurity http, AuthorizationFilter authorizationFilter) throws Exception {
+    public SecurityFilterChain config(HttpSecurity http, AuthorizationFilter authFilter) throws Exception {
         http.csrf(csrf -> csrf.disable());
         http.authorizeHttpRequests(auth ->
                 auth
@@ -23,7 +22,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
 
         );
-        http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

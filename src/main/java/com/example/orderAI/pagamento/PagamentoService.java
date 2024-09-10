@@ -1,5 +1,6 @@
 package com.example.orderAI.pagamento;
 
+import com.example.orderAI.usuario.Usuario;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,10 @@ public class PagamentoService {
 
     public List<Pagamento> findAll() {
         return repository.findAll();
+    }
+
+    public List<Pagamento> findByUsuario(Usuario usuario) {
+        return repository.findByUsuario(usuario);
     }
 
     public Pagamento create(Pagamento pagamento) {
