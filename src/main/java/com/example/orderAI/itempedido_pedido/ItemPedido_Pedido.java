@@ -17,17 +17,17 @@ import lombok.NoArgsConstructor;
 @Table(name = "itempedido_pedido")
 public class ItemPedido_Pedido {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_itemPedido_Pedido;
+    Long id_itemPedido_Pedido;
 
     @ManyToOne
-    private Pedido pedido;
+    Pedido pedido;
 
-    @NotNull(message="itempedido_pedido.quantidade.notnull")
-    @Positive(message="itempedido_pedido.quantidade.positive")
-    private int quantidade;
+    @NotNull(message = "itempedido_pedido.quantidade.notnull")
+    @Positive(message = "itempedido_pedido.quantidade.positive")
+    int quantidade;
 
-    @NotNull(message="itempedido_pedido.preco.notNull")
-    @Positive(message="itempedido_pedido.preco.positive")
-    private double preco;
-
+    @NotNull(message = "itempedido_pedido.preco.notNull")
+    @Positive(message = "itempedido_pedido.preco.positive")
+    double preco;
 }
+

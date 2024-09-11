@@ -16,22 +16,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "itempedido")
 public class ItemPedido {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_itempedido;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id_itempedido;
 
     @NotBlank(message = "itempedido.nome.notblank")
     @Size(min = 3, max = 255, message = "itempedido.nome.size")
-    private String nome;
+    String nome;
 
     @NotBlank(message = "itempedido.descricao.notblank")
     @Size(min = 3, max = 255, message = "itempedido.descricao.size")
-    private String descricao;
+    String descricao;
 
     @NotBlank(message = "itempedido.recomendacao.notblank")
     @Size(min = 3, max = 255, message = "itempedido.recomendacao.size")
-    private String recomendacao;
+    String recomendacao;
 
     @ManyToOne
-    private ItemPedido_Pedido itempedidopedido;
+    ItemPedido_Pedido itempedidopedido;
 }
+
 

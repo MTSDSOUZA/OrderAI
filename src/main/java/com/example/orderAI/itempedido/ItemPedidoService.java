@@ -14,18 +14,16 @@ public class ItemPedidoService {
     @Autowired
     private ItemPedidoRepository repository;
 
-    @Autowired
-    private ItemPedido_PedidoService itemPedido_PedidoService;
 
     // Lista todos os itens de pedido
     public List<ItemPedido> findAll() {
         return repository.findAll();
     }
 
-    // Lista itens de pedido por ItemPedido_Pedido
-    public List<ItemPedido> findByItemPedido_Pedido(ItemPedido_Pedido itemPedido_Pedido) {
-        return repository.findByItemPedido_Pedido(itemPedido_Pedido);
-    }
+//    // Lista itens de pedido por ItemPedido_Pedido
+//    public List<ItemPedido> findByItemPedido_Pedido(ItemPedido_Pedido itemPedido_Pedido) {
+//        return repository.findByItemPedido_Pedido(itemPedido_Pedido);
+//    }
 
     // Busca um item de pedido por ID
     public ItemPedido getById(Long id) {

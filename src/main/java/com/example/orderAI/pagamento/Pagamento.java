@@ -17,27 +17,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "pagamento")
 public class Pagamento {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_pagamento;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id_pagamento;
 
     @NotNull(message = "pagamento.num_cartao.notNull")
     @Size(max = 16, message = "pagamento.num_cartao.size")
-    private String num_cartao;
+    String num_cartao;
 
     @NotNull(message = "pagamento.nome_cartao.notNull")
     @Size(min = 3, max = 255, message = "pagamento.nome_cartao.size")
-    private String nome_cartao;
+    String nome_cartao;
 
     @NotNull(message = "pagamento.data_validade.notNull")
-    private String data_validade;
+    String data_validade;
 
     @Positive(message = "pagamento.cvv.positive")
     @NotNull(message = "pagamento.cvv.notNull")
-    private int cvv;
+    int cvv;
 
-    private String apelido_cartao;
+    String apelido_cartao;
 
     @ManyToOne
-    private Usuario usuario;
+    Usuario usuario;
 }
+
 

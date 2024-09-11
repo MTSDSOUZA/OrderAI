@@ -22,28 +22,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "pedido")
 public class Pedido {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_pedido;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id_pedido;
 
     @NotNull(message = "pedido.valor_total.notNull")
     @Positive(message = "pedido.valor_total.positive")
-    private Double valor_total;
+    Double valor_total;
 
     @NotNull(message = "pedido.frete_entrega.notNull")
     @Positive(message = "pedido.frete_entrega.positive")
-    private Double frete_entrega;
+    Double frete_entrega;
 
     @PastOrPresent
     @JsonFormat(pattern = "dd/MM/yyyy")
     @NotNull(message = "pedido.data_pedido.notNull")
-    private LocalDate data_pedido;
+    LocalDate data_pedido;
 
     @Future
     @JsonFormat(pattern = "dd/MM/yyyy")
     @NotNull(message = "pedido.data_entrega.notNull")
-    private LocalDate data_entrega;
+    LocalDate data_entrega;
 
     @ManyToOne
-    private Usuario usuario;
+    Usuario usuario;
 }
 

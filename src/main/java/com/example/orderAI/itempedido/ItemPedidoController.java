@@ -52,12 +52,12 @@ public class ItemPedidoController {
         return ResponseEntity.ok(itens);
     }
 
-    @GetMapping("/itempedido_pedido/{id_itempedido_pedido}")
-    public ResponseEntity<List<ItemPedido>> findByItemPedido_Pedido(@PathVariable Long id_itempedido_pedido) {
-        ItemPedido_Pedido itemPedido_Pedido = itemPedido_PedidoService.getById(id_itempedido_pedido);
-        List<ItemPedido> itens = itemPedidoService.findByItemPedido_Pedido(itemPedido_Pedido);
-        return ResponseEntity.ok(itens);
-    }
+//    @GetMapping("/itempedido_pedido/{id_itempedido_pedido}")
+//    public ResponseEntity<List<ItemPedido>> findByItemPedido_Pedido(@PathVariable Long id_itempedido_pedido) {
+//        ItemPedido_Pedido itemPedido_Pedido = itemPedido_PedidoService.getById(id_itempedido_pedido);
+//        List<ItemPedido> itens = itemPedidoService.findByItemPedido_Pedido(itemPedido_Pedido);
+//        return ResponseEntity.ok(itens);
+//    }
 
     @GetMapping("{id}")
     @Operation(
