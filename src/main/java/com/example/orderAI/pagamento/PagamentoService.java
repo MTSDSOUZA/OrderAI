@@ -17,9 +17,9 @@ public class PagamentoService {
         return repository.findAll();
     }
 
-    public List<Pagamento> findByUsuario(Usuario usuario) {
-        return repository.findByUsuario(usuario);
-    }
+//    public List<Pagamento> findByUsuario(Usuario usuario) {
+//        return repository.findByUsuario(usuario);
+//    }
 
     public Pagamento create(Pagamento pagamento) {
         return repository.save(pagamento);

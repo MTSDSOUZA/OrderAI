@@ -42,8 +42,8 @@ public class PedidoService {
         repository.delete(pedido);
     }
 
-    // Novo método para buscar pedidos por usuário
-    public List<Pedido> findByUsuario(Usuario usuario) {
-        return repository.findByUsuario(usuario);
-    }
+//    // Novo método para buscar pedidos por usuário
+//    public List<Pedido> findByUsuario(Usuario usuario) {
+//        return repository.findByUsuario(usuario);
+//    }
 }

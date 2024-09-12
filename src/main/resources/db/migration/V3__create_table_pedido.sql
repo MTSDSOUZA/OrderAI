@@ -4,6 +4,6 @@ CREATE TABLE IF NOT EXISTS pedido (
                         frete_entrega DOUBLE NOT NULL CHECK (frete_entrega > 0),
                         data_pedido DATE NOT NULL,
                         data_entrega DATE NOT NULL,
-                        usuario_id BIGINT,
-                        CONSTRAINT fk_pedido_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario)
+                        usuario_id_usuario BIGINT,
+                        CONSTRAINT fk_pedido_usuario FOREIGN KEY (usuario_id_usuario) REFERENCES usuario(id_usuario)
 );

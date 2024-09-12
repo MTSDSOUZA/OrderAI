@@ -22,10 +22,10 @@ public class ItemPedido_PedidoService {
         return repository.findAll();
     }
 
-    // Lista todos os itens de um pedido específico
-    public List<ItemPedido_Pedido> findByPedido(Pedido pedido) {
-        return repository.findByPedido(pedido);
-    }
+//    // Lista todos os itens de um pedido específico
+//    public List<ItemPedido_Pedido> findByPedido(Pedido pedido) {
+//        return repository.findByPedido(pedido);
+//    }
 
     // Busca um item específico pelo ID
     public ItemPedido_Pedido getById(Long id) {

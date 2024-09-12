@@ -50,13 +50,13 @@ public class PedidoController {
         return pedidoService.findAll();
     }
 
-    @GetMapping("/usuario/{id_usuario}")
-    @Operation(summary = "Listar todos os Pedidos do usuário")
-    public ResponseEntity<List<Pedido>> findByUsuario(@PathVariable Long id_usuario) {
-        Usuario usuario = usuarioService.getById(id_usuario);
-        List<Pedido> pedidos = pedidoService.findByUsuario(usuario);
-        return ResponseEntity.ok(pedidos);
-    }
+//    @GetMapping("/usuario/{id_usuario}")
+//    @Operation(summary = "Listar todos os Pedidos do usuário")
+//    public ResponseEntity<List<Pedido>> findByUsuario(@PathVariable Long id_usuario) {
+//        Usuario usuario = usuarioService.getById(id_usuario);
+//        List<Pedido> pedidos = pedidoService.findByUsuario(usuario);
+//        return ResponseEntity.ok(pedidos);
+//    }
 
     @GetMapping("{id}")
     @Operation(summary = "Listar Pedido por id")

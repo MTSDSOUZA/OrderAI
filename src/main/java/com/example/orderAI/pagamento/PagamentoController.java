@@ -53,12 +53,12 @@ public class PagamentoController {
         return pagamentoService.findAll();
     }
 
-    @GetMapping("/usuario/{id_usuario}")
-    public ResponseEntity<List<Pagamento>> findByUsuario(@PathVariable Long id_usuario) {
-        Usuario usuario = usuarioService.getById(id_usuario);
-        List<Pagamento> pagamentos = pagamentoService.findByUsuario(usuario);
-        return ResponseEntity.ok(pagamentos);
-    }
+//    @GetMapping("/usuario/{id_usuario}")
+//    public ResponseEntity<List<Pagamento>> findByUsuario(@PathVariable Long id_usuario) {
+//        Usuario usuario = usuarioService.getById(id_usuario);
+//        List<Pagamento> pagamentos = pagamentoService.findByUsuario(usuario);
+//        return ResponseEntity.ok(pagamentos);
+//    }
 
     @GetMapping("{id}")
     @Operation(

@@ -48,15 +48,15 @@ public class ItemPedido_PedidoController {
         return ResponseEntity.ok(itens);
     }
 
-    @Operation(
-        summary = "Listar itens de um pedido em específico"
-    )
-    @GetMapping("/pedido/{id_pedido}")
-    public ResponseEntity<List<ItemPedido_Pedido>> findByPedido(@PathVariable Long id_pedido) {
-        Pedido pedido = pedidoService.getById(id_pedido);
-        List<ItemPedido_Pedido> itens = itemPedido_pedidoService.findByPedido(pedido);
-        return ResponseEntity.ok(itens);
-    }
+//    @Operation(
+//        summary = "Listar itens de um pedido em específico"
+//    )
+//    @GetMapping("/pedido/{id_pedido}")
+//    public ResponseEntity<List<ItemPedido_Pedido>> findByPedido(@PathVariable Long id_pedido) {
+//        Pedido pedido = pedidoService.getById(id_pedido);
+//        List<ItemPedido_Pedido> itens = itemPedido_pedidoService.findByPedido(pedido);
+//        return ResponseEntity.ok(itens);
+//    }
 
     @Operation(
             summary = "Listar associação de Pedido e ItemPedido por id"
