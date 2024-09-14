@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.orderAI.usuario.Usuario;
 import com.example.orderAI.usuario.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +13,12 @@ import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
-    private final UsuarioRepository usuarioRepository;
-    Algorithm algorithm = Algorithm.HMAC256("assinatura");
+    private final UsuarioRepository userRepository;
+    private Algorithm algorithm;
 
-    public TokenService(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public TokenService(UsuarioRepository userRepository, @Value("${jwt.secret}") String secret) {
+        this.userRepository = userRepository;
+        algorithm = Algorithm.HMAC256(secret);
     }
 
     public Token create(Usuario user){
@@ -39,7 +41,7 @@ public class TokenService {
                 .verify(token)
                 .getSubject();
 
-        return usuarioRepository.findByEmail(email)
+        return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
     }

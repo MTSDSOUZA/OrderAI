@@ -16,10 +16,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "itempedido_pedido")
 public class ItemPedido_Pedido {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id_itemPedido_Pedido;
 
     @ManyToOne
+    @JoinColumn(name = "pedido_id_pedido")
     Pedido pedido;
 
     @NotNull(message = "itempedido_pedido.quantidade.notnull")

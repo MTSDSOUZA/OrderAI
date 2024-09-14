@@ -111,9 +111,9 @@ public class UsuarioController {
         @ApiResponse(responseCode = "401"),
         @ApiResponse(responseCode = "404")
     })
-    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario usuario) {
-        log.info("Atualizando usuário com id {} para {}", id, usuario);
-        Usuario updatedUser = usuarioService.update(id, usuario);
+    public ResponseEntity<Usuario> update(@PathVariable Long id_usuario, @RequestBody Usuario usuario) {
+        log.info("Atualizando usuário com id {} para {}", id_usuario, usuario);
+        Usuario updatedUser = usuarioService.update(id_usuario, usuario);
         return ResponseEntity.ok(updatedUser);
     }
 

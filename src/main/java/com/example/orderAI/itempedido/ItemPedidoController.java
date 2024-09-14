@@ -111,8 +111,8 @@ public class ItemPedidoController {
         @ApiResponse(responseCode = "401"),
         @ApiResponse(responseCode = "404")
     })
-    public ResponseEntity<ItemPedido> update(@PathVariable Long id, @RequestBody ItemPedido itemPedido) {
-        ItemPedido updatedItem = itemPedidoService.update(id, itemPedido);
+    public ResponseEntity<ItemPedido> update(@PathVariable Long id_itempedido, @RequestBody ItemPedido itemPedido) {
+        ItemPedido updatedItem = itemPedidoService.update(id_itempedido, itemPedido);
         return ResponseEntity.ok(updatedItem);
     }
 }

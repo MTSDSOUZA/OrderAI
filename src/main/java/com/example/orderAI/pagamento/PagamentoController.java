@@ -120,9 +120,9 @@ public class PagamentoController {
         @ApiResponse(responseCode = "401"),
         @ApiResponse(responseCode = "404")
     })
-    public ResponseEntity<Pagamento> update(@PathVariable Long id, @RequestBody Pagamento pagamento) {
-        log.info("Atualizando pagamento com id {} para {}", id, pagamento);
-        Pagamento updatedPagamento = pagamentoService.update(id, pagamento);
+    public ResponseEntity<Pagamento> update(@PathVariable Long id_pagamento, @RequestBody Pagamento pagamento) {
+        log.info("Atualizando pagamento com id {} para {}", id_pagamento, pagamento);
+        Pagamento updatedPagamento = pagamentoService.update(id_pagamento, pagamento);
         return ResponseEntity.ok(updatedPagamento);
     }
 
