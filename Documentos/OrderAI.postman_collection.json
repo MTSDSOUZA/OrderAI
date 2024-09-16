@@ -7,6 +7,38 @@
 	},
 	"item": [
 		{
+			"name": "login",
+			"item": [
+				{
+					"name": "Realizar Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"rm97768@fiap.com.br\",\n    \"senha\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Usuário",
 			"item": [
 				{
@@ -57,11 +89,21 @@
 				{
 					"name": "Atualizar Usuario",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"nome\": \"Kauê Fernandes Braz\",\n        \"email\": \"rm97768@fiap.com.br\",\n        \"senha\": \"12345678\",\n        \"telefone\": \"123456789\",\n        \"endereco\": \"Rua FIAP\",\n        \"cep\": \"023231231\",\n        \"cidade\": \"São Paulo\",\n        \"estado\": \"São Paulo\",\n        \"cpf\": \"54610446898\",\n        \"data_cadastro\": \"05/05/2024\",\n        \"data_nascimento\": \"23/03/2005\",\n        \"tipo_pagamento\": \"Débito\",\n        \"sexo\": \"Masculino\"\n}",
+							"raw": "{\n    \"nome\": \"Kauê\",\n    \"email\": \"kaueteste@fiap.com.br\",\n    \"senha\": \"$2a$10$b6YWYub356qDo/JnYTKrj.rSkrpGoJWO2DD5bWkAuOEYehp3F/V66\",\n    \"telefone\": \"123456789\",\n    \"endereco\": \"Rua FIap Paulista\",\n    \"cep\": \"023231231\",\n    \"cidade\": \"São Paulo\",\n    \"estado\": \"São Paulo\",\n    \"cpf\": \"54610446898\",\n    \"data_cadastro\": \"05/05/2024\",\n    \"data_nascimento\": \"27/03/2005\",\n    \"tipo_pagamento\": \"Débito\",\n    \"sexo\": \"Masculino\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -459,15 +501,24 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/itempedidopedido/1",
+							"raw": "localhost:8080/itempedidopedido/3",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"itempedidopedido",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -493,6 +544,34 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJvcmRlcmFpIiwic3ViIjoia2F1ZXRlc3RlQGZpYXAuY29tLmJyIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzI2NDg2NzU5fQ.fWeEMn4FAPZDSXDME_bkLr6b_C7brafAplE21su7jhA"
 		}
 	]
 }
